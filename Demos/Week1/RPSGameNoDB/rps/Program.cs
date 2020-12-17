@@ -1,65 +1,18 @@
 ﻿using System;
 
-namespace HellowWorldDemo
+namespace rps
 {
     class Program
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello, would you like to play RPS with a computre? y/n");
+            if (Console.ReadLine()=="y"){
 
-
-        //    try{
-        //         int uRint= int.Parse(uR);
-
-        //    }
-        //         catch(FormatException e)  {
-        //             throw new FormatException("there was a problem paring the user input");
-        //         }      
-        int userChoice;
-        bool usrResParsed;
-
-        do {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Welcome to RPS!");
-
-            //inclass project
-
-            
-
-           Console.WriteLine("Place choose r, p, or s \n\t1, 2, 3 respectively");
-           string uR= Console.ReadLine();
-            usrResParsed = int.TryParse(uR, out userChoice);
-
-        if (usrResParsed==false || userChoice > 3 || userChoice < 1){
-            usrResParsed=false;
-            Console.WriteLine("Your response is invalid");
-        }
-
-
-        }   while(usrResParsed==false);
-           
-        Console.WriteLine($"You entered: {userChoice}");
-
-        Random randomNum =new Random();
-        int computerChoice = randomNum.Next(1, 4);
-
-        Console.WriteLine(computerChoice);
-
-        if (userChoice==computerChoice){
-            Console.WriteLine("Tie");
-        }
-        else if 
-            ((userChoice==2 && computerChoice==1)||
-            (userChoice==3 && computerChoice==2)||
-            (userChoice==1 && computerChoice==3)){
-                Console.WriteLine("LETS GO");
-        }
-
-        else{
-            Console.WriteLine("The computer won");
-        }
-
-
+                Rounds qm = new Rounds();
+                string winner=qm.quickMatchComputer();
+                Console.WriteLine(winner);
+            }
         }
 
         

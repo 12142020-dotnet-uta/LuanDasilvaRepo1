@@ -17,7 +17,7 @@ namespace rps
     static List<string> scissor = new List<string>
             {"3","scissor", "scissr","sciss","s"};
 
-            public int ValidateToInt(string arg){
+            public int ValidateRPSOptionsToInt(string arg){
 
                     if(rock.Contains(arg)){
                             return 1;

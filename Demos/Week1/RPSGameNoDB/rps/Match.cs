@@ -1,27 +1,60 @@
+using System;
 using System.Collections.Generic;
 
 namespace rps
 
 {
     public class Match
-    {
+{
+    //variables
+    int p1Choice;
+    int p2Choice;
+    int numRounds;
+    int userChoice;
 
-        public int MatchID{get;set;}
-        public Player Player1{get;set;}//always computer for now
-        public Player Player2{get;set;}//always player for now
-        List<Rounds> Rounds=new List<Rounds>();
+    //utility constructors
+    public string quickMatchComputer(){
+    ValidationOptions vo= new ValidationOptions();
+    do{
+           Console.WriteLine("Place choose r, p, or s \n\t1, 2, 3 respectively");
+           string uR= Console.ReadLine();
+           
+           userChoice=vo.ValidateRPSOptionsToInt(uR);
+           
 
-        private int p1wins{get; set;}
-    private int p2wins{get; set;}
-    public void RoundWinner(Player p=null){
-        if(p==Player1){
-            p1wins++;
+
+        if (userChoice==0 ){
+            return ("Your response is invalid");
+        }}   while(userChoice==0);
+
+    
+           
+        Console.WriteLine($"You entered: {userChoice}");
+
+        Random randomNum =new Random();
+        int computerChoice = randomNum.Next(1, 4);
+
+        Console.WriteLine(computerChoice);
+
+        if (userChoice==computerChoice){
+           return ("Tie");
         }
-        else if(p==Player2) {
-            
+        else if 
+            ((userChoice==2 && computerChoice==1)||
+            (userChoice==3 && computerChoice==2)||
+            (userChoice==1 && computerChoice==3)){
+                return("LETS GO");
         }
 
-    }
-    }
+        else{
+            return ("The computer won");
+        }
+
+
+        }
+
+
+
+}
 
 }

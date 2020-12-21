@@ -17,8 +17,22 @@ namespace rps
 
 
         //methods
+        public void GetAllPlayer(){
+            try{
+              foreach (Player p in playerBase)
+              {
+                Console.WriteLine($"{p.Fname}+{p.Lname}");   
+              }
 
-        public bool addPlayer(Player p){
+               
+            }
+            catch (Exception NullReferenceException){
+                Console.WriteLine("No players found?");
+                 
+            }
+            
+        }
+        public bool AddPlayer(Player p){
             try{
                 playerBase.Add(p);
 
@@ -33,7 +47,7 @@ namespace rps
                 return false; ///addds to list but also throws exception?????????
             }
         }
-        public Player findPlayerByFNLN(string fname, string lname)
+        public Player FindPlayerByFNLN(string fname, string lname)
             {
             
 
@@ -53,19 +67,27 @@ namespace rps
         public List<Player> GetPBList()
             { return playerBase; }
 
-        public bool isFirstNLastNInSys(string fname, string lname){
+        public bool IsFirstNLastNInSys(string fname, string lname){
                 
             if(playerBaseFnameList!=null && playerBaseLnameList!=null){
                 if (playerBaseFnameList.Contains(fname)){
                     if(playerBaseLnameList.Contains(lname)){
                         return true;
                     }
-                }}return false;  
-
-             
-             
+                }}
+        return false;          
     }
 
 
+
+    
+        
+
+
+
+
+
+
 }
+
 }

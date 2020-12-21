@@ -35,6 +35,29 @@ namespace rps
                     }
 
 
+
+
+            }
+
+    public int ValidateOptionsToInt(string arg){
+                int result;
+                bool usrOut=int.TryParse(arg, out result);
+                return result;
+
+                }
+
+            
+
+
+                public bool ValidateUsername(string arg){
+
+                        if(arg.Length<2 || arg.Length>20){
+                                return false;
+                        }return true;
+
+                }
+
+
             }
         
     
@@ -50,4 +73,3 @@ namespace rps
 
 
     }
-}

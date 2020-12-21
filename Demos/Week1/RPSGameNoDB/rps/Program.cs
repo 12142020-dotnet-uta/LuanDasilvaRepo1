@@ -7,8 +7,14 @@ namespace rps
         static void Main(string[] args)
         {
 
+        
+
             Menus menus = new Menus();
-            menus.IntroMenu();
+
+            bool gameIsRunning=true;
+            while(gameIsRunning){
+                gameIsRunning=menus.IntroMenu();
+            }
         }
     }
 }

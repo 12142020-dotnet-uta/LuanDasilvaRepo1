@@ -1,12 +1,16 @@
 using System;
+using System.Collections.Generic;
 namespace rps
 {
     public class Player
     {
 
-        //fields and props
-        private int numWins;
-        private int numLosses;
+        //fields and propsivate int numLosses;
+        private List<Match> matchlist;
+        public List<Match> MatchList
+        {
+            get{return matchlist;}
+        }
 
         private string fName;
         public string Fname
@@ -66,15 +70,18 @@ namespace rps
 
 
 //methods
+        
+        public void AddMatch(Match match){
+            try{
+                matchlist.Add(match);
+            }catch(Exception NullReferenceExceptio){
+                Console.WriteLine("Something went wrong adding your match to your player's history!");
+            }
 
-        public void AddWin(){numWins++;}
-        public void AddLoss(){numLosses++;}
+            }
 
-        public int [] GetWinLossRecord(){
-            int [] winsandlosses= new int[2];
-            winsandlosses[0]=numWins;
-            winsandlosses[1]=numLosses;
 
-            return winsandlosses;}
-    }
+}
+
+
 }

@@ -19,6 +19,9 @@ namespace DataAccessLayer
         public DbSet<Tour> Tours{get;set;}
         public DbSet<BaseFloor> Floors{get;set;}
 
+public Project0DbContext(){ }
+   public Project0DbContext(DbContextOptions options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
       {
             options.UseSqlServer("Server=localhost\\SQLEXPRESS;"

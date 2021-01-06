@@ -33,9 +33,9 @@ namespace Views
         //cosntructors
         public TourGuide(){
             Words="Welcome to the Abstract Museum, where we abstract out abstract art! What would you like to do?\n";
-            Options="1. Create User \n2. Login\n-1. Quit";
+            Options="1. Create User \n2. Login\n-1. Quit\n\n\n\n\nAdmin.";
             Result="-1";
-            AcceptableResponses= new List<string> { "1","2","-1" };
+            AcceptableResponses= new List<string> { "1","2","-1","Admin" };
             
             
         }

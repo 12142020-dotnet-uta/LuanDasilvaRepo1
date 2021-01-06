@@ -17,15 +17,9 @@ namespace Project0
         {
 
         
-            // Project0RepoLayer p0Context = new Project0RepoLayer();3
-            //     Console.WriteLine("About to populate db");
-            //     Console.ReadLine();
-            //     p0Context.DBCreateBaseFloor("ChristenA Exhibit", 4, 19);
-            //     p0Context.DBCreateBaseFloor("Picasso Exhibit", 6, 34);
-            //     p0Context.DBCreateBaseFloor("Pollock Exhibit", 2, 15);
-            //create our tour guide
             
-            TourGuide tourGuide = new TourGuide();
+            
+        TourGuide tourGuide = new TourGuide();
 
         do {//enter program
 
@@ -38,9 +32,9 @@ namespace Project0
             tourGuide.Result=Console.ReadLine();
 
             if(!((tourGuide.AcceptableResponses).Contains(tourGuide.Result))){
-                Console.WriteLine("This input isn't listed!\nIf you're trying to potentially skip a menu, your tour guide has a list of acceptable answers that are given above!\n Press enter to continue...");
-                tourGuide.Result="0";
-                Console.ReadLine();
+                    Console.WriteLine("This input isn't listed!\nIf you're trying to potentially skip a menu, your tour guide has a list of acceptable answers that are given above!\n Press enter to continue...");
+                    tourGuide.Result="0";
+                    Console.ReadLine();
             }
             tourGuide=PrintToScreenHelper.TourGuideHelper(tourGuide);
 

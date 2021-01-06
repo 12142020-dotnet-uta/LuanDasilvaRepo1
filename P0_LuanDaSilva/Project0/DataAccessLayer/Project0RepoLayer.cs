@@ -11,13 +11,33 @@ namespace DataAccessLayer
     {
         
         //set db repo vars
-        static public Project0DbContext DbContext = new Project0DbContext();
-        DbSet<User> users = DbContext.Users;
-        DbSet<Painting> paintings= DbContext.Paintings;
-        DbSet<Tour> tours= DbContext.Tours;
-        DbSet<BaseFloor> floors= DbContext.Floors;
+        Project0DbContext DbContext;
+        DbSet<User> users;
+        DbSet<Painting> paintings;
+        DbSet<Tour> tours;
+        DbSet<BaseFloor> floors;
 
-        DbSet<FloorTourUsrLine> floorTourUsrLines= DbContext.FloorTourUsrLines;
+        DbSet<FloorTourUsrLine> floorTourUsrLines;
+
+
+          public Project0RepoLayer()
+        {
+            this.DbContext = new Project0DbContext();
+            this.users = DbContext.Users;
+            this.paintings = DbContext.Paintings;
+            this.tours = DbContext.Tours;
+            this.floors=DbContext.Floors;
+            this.floorTourUsrLines=DbContext.FloorTourUsrLines;
+        }
+        public Project0RepoLayer(Project0DbContext context)
+        {
+       this.DbContext = context;
+            this.users = DbContext.Users;
+            this.paintings = DbContext.Paintings;
+            this.tours = DbContext.Tours;
+            this.floors=DbContext.Floors;
+            this.floorTourUsrLines=DbContext.FloorTourUsrLines;
+        }
 
 
         //repo methods
@@ -29,7 +49,7 @@ namespace DataAccessLayer
                 Painting p = new Painting();
                 try
                 {
-                    p = paintings.Where(x => x.LocationCodeName== locName && x.X==rowChoice && x.Y==colChoice).FirstOrDefault();
+                    p = (paintings.Where(x => x.LocationCodeName== locName && x.X==rowChoice && x.Y==colChoice).FirstOrDefault()!);
                     return p;
    
                 }
@@ -71,7 +91,7 @@ namespace DataAccessLayer
                 User u = new User();
                 try
                 {
-                    u = users.Where(x => x.Username== uname ).FirstOrDefault();
+                    u = (users.Where(x => x.Username== uname ).FirstOrDefault()!);
                     return u;
    
                 }
@@ -97,7 +117,7 @@ namespace DataAccessLayer
                 Tour u = new Tour();
                 try
                 {
-                    u = tours.Where(x => (x.LocationCodeName==locCodeName && x.RowNum==rowNum)).FirstOrDefault();
+                    u = (tours.Where(x => (x.LocationCodeName==locCodeName && x.RowNum==rowNum)).FirstOrDefault())!;
                     if(u!=null ){
                          return u;  
                     }
@@ -127,7 +147,7 @@ namespace DataAccessLayer
                 Tour u = new Tour();
                 try
                 {
-                    u = tours.Where(x => (x.TourID==id)).FirstOrDefault();
+                    u = tours.Where(x => (x.TourID==id)).FirstOrDefault()!;
                     return u;  
                     
    
@@ -162,10 +182,35 @@ namespace DataAccessLayer
                     
                     throw new Exception("Nothing found.");
                 }
+        
+        }
+
+
+
+
+
+
+/// <summary>
+/// Retrieve all floor as a set of strings
+/// </summary>
+/// <returns></returns>
+        public List<string> FindAllPaintings(string floorName){
+
+                try
+                {
+                List<string> lst=new List<string>();
+                lst=paintings.Where(item => item.LocationCodeName==floorName).Select(item=> item.PaintingName).ToList();
+                return lst;
+                }
+    
+                catch (System.Exception)
+                {
+                    
+                    throw new Exception("Nothing found.");
+                }
             
 
         }
-
 
 /// <summary>
 /// Get a list of all paintings
@@ -179,7 +224,7 @@ namespace DataAccessLayer
         public BaseFloor? GetFloor(string name){
              BaseFloor f = new BaseFloor();
 
-            f = floors.Where(f => f.LocationCodeName==name ).FirstOrDefault();
+            f = floors.Where(f => f.LocationCodeName==name ).FirstOrDefault()!;
 
             if (f == null)
             {
@@ -339,7 +384,7 @@ namespace DataAccessLayer
                 return false;
                 
             }else{
-                --t.LocationRemainingTours;
+                t.LocationRemainingTours=t.LocationRemainingTours-1;
                 DbContext.SaveChanges();
                 return true;
             }

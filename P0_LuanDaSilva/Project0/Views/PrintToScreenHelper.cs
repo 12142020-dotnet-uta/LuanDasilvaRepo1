@@ -57,26 +57,27 @@ namespace Views
                             Console.ReadLine();
                         }
                         break;
+                  
                     #nullable disable
 
 
                     case "6":
                     ViewAllPaintingsHelper();
                     break;
-
-
-
-
+                    case "7":
+                        Console.WriteLine($"Viewing details for {tg.User.Username}\nFirst Name: {tg.User.Fname}\nLast Name:{tg.User.Lname}\nGuid:{tg.User.UserID}\nPress enter to continue: ");
+                        Console.ReadLine();
+                        break;
 
 
                     
-                    case "Admin":
+                    case "addexhibit":
 
  
                     Validator validator=new Validator();
                     Console.Write("Enter floor name: "); string floorName=Console.ReadLine();
                     Console.Write("Enter floor size (max 7):"); int? floorSize = validator.ValidateStringToInt(Console.ReadLine())!;
-                    Console.Write("Enter floor size: "); int? totalTours = validator.ValidateStringToInt(Console.ReadLine())!;
+                    Console.Write("Enter total tours per day: "); int? totalTours = validator.ValidateStringToInt(Console.ReadLine())!;
 
                     if(floorSize!=null && totalTours!=null){
                         int x=(int) floorSize;
@@ -130,7 +131,7 @@ namespace Views
                                     if(tmpCheckString=="y"){
                                         User user=p0Context.CreateUser(un,fn,ln);
                                         List<string> acceptable =new List<string> {"-1","-2","3","4","5","6","7"};
-                                        tg = new TourGuide($"Welcome {user.Username}!", "What would you like to do?\n\n3. View Floor\n4. Book a tour\n5. View All Paintings\n6. View Past Tours\n\n\n-2. Logout\n-1. Quit Out", "-2", acceptable, user);
+                                        tg = new TourGuide($"Welcome {user.Username}!", "What would you like to do?\n\n3. View Exhibit Information\n4. Book a tour\n5. View All Paintings\n6. View Past Tours\n7. My Details\n\n-2. Logout\n-1. Quit Out", "-2", acceptable, user);
                                         tmpCheck=true;    
                                     }
                                     else if(tmpCheckString=="n"){
@@ -153,6 +154,7 @@ namespace Views
             
             Project0RepoLayer p0Context = new Project0RepoLayer(); // create the context here to acceess it in all methods of this class                Console.Clear();
             Validator validator=new Validator();
+            
 
             Console.Clear();
             Console.Write("Great to see you again! You can quit to the main menu by entering '-2'. Enter your unique username: ");
@@ -168,8 +170,8 @@ namespace Views
                             tg.Result="0";
                         }
                         else{
-                            List<string> acceptable =new List<string> {"-1", "-2","3","4","5","6"};
-                            tg = new TourGuide($"Welcome {user.Username}!\n", "What would you like to do?\n\n3. View Floor\n4. Book a tour\n5. View Past Tours\n6. View Paintings\n\n\n-2. Logout\n-1. Quit Out", "0", acceptable, user);
+                            List<string> acceptable =new List<string> {"-1", "-2","3","4","5","6","7"};
+                            tg = new TourGuide($"Welcome {user.Username}!\n", "What would you like to do?\n\n3. Exhibit Information\n4. Book a tour\n5. View Past Tours\n6. View Paintings\n7. View Details\n\n-2. Logout\n-1. Quit Out", "0", acceptable, user);
                             return tg;
                         }
                
@@ -301,45 +303,50 @@ public static void ViewFloorTour(User u)
         }
         string userInput = Console.ReadLine();
     #nullable enable
+    if(userInput!=""){
         int? floorNumberChoice= validator.ValidateStringToInt(userInput);
-       
-        if(floorNumberChoice.HasValue){
+    
+        if(floorNumberChoice!=null){
             int fNC=(int) floorNumberChoice;
             --fNC;
-            string floorName = lst[fNC];
-
-            if(fNC<lst.Count){
-                BaseFloor floor = p0Context.GetFloor(floorName)!;
-                Console.WriteLine($"What row would you like to tour? Your options are 1-{floor.LocationSize}:");
-
-                int? uRC=validator.ValidateStringToInt(Console.ReadLine());
-                
-                if (uRC!=null){
-                    int usrRowChoice=(int) uRC;
-                    int n = floor.LocationSize+1;
             
 
-                    if(floor.LocationRemainingTours!=0){
-                            bool tbool=p0Context.RemoveTourFromFloor(floorName);
+            if(fNC<lst.Count ){
+                string floorName = lst[fNC];
+                if(p0Context.FloorHasTours(floorName)){
+                    BaseFloor floor = p0Context.GetFloor(floorName)!;
+                    Console.WriteLine($"What row would you like to tour? Your options are 1-{floor.LocationSize}:");
 
-                        if(tbool && usrRowChoice <n){
-                            Tour tour=p0Context.FindTour(floorName, usrRowChoice)!;
-                            Console.Clear();
-                            p0Context.CreateFloorTourUsrLine(floorName, tour.TourID ,u.UserID);
-
-                            int priceOfTour= GoOnFloorTour(floorName, floor.LocationSize, usrRowChoice);
-
-
-                            Console.WriteLine("Tour completed!");
-                        }
-
-                    }else{
-                        Console.WriteLine($"We are sorry but the {floorName} does not have any remaining tours! Please check another time!");
-                    }
-
+                    int? uRC=validator.ValidateStringToInt(Console.ReadLine());
                     
-                    Console.WriteLine("\n\nPress enter to continue");
+                    if (uRC!=null){
+                        int usrRowChoice=(int) uRC;
+                        int n = floor.LocationSize+1;
+                                if(usrRowChoice < n){
+                                
+                                Tour tour=p0Context.FindTour(floorName, usrRowChoice)!;
+                                Console.Clear();
+                                p0Context.CreateFloorTourUsrLine(floorName, tour.TourID ,u.UserID);
+
+                                int priceOfTour= GoOnFloorTour(floorName, floor.LocationSize, usrRowChoice);
+
+
+                            
+                                Console.WriteLine("Tour completed!");
+                                p0Context.RemoveTourFromFloor(floorName);
+                            }}
+
+                            
+
+
+                        
+                        Console.WriteLine("\n\nPress enter to continue");
+                        Console.ReadLine();
+                }else{
+                    Console.WriteLine($"Sorry! {floorName} does not have any more tours remaining! Press enter to continue");
                     Console.ReadLine();
+                }
+                
                 }}
 
     

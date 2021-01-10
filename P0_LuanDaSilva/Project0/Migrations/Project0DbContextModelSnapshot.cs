@@ -50,6 +50,9 @@ namespace Project0.Migrations
                     b.Property<Guid>("TourID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("TourTakenAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 

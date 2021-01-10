@@ -359,19 +359,38 @@ namespace DataAccessLayer
         }
 
     /// <summary>
-    /// Creates a base floor. This is, creates a list of linked list of paintings. these objects are the virtual room
+    /// Checks if a floor has tours remaining
     /// </summary>
     /// <param name="locCodeName"></param>
     /// <param name="locSize"></param>
     /// <param name="remTours"></param>
     /// <returns></returns>
 
+
+    public bool FloorHasTours(string locCodeName){    
+             BaseFloor t = new BaseFloor();
+
+
+            t = floors.Where(t =>  t.LocationCodeName==locCodeName).FirstOrDefault();
+
+            if (t != null)
+            {
+                if(t.LocationRemainingTours==0){
+                    return false;
+
+                }
+            
+    }return true;}
+
+
+
     /// <summary>
-    /// Allows users to go on tour (reduces remaining tours on the tour Floor taken), consequently create a new FloorTourUsrLine entry.
+    /// Reduces remaining tours on the tour Floor taken, consequently create a new FloorTourUsrLine entry.
     /// </summary>
     /// <param name="locCodeName"></param>
     /// <returns></returns>
-    public bool RemoveTourFromFloor(string locCodeName){
+    
+    public void RemoveTourFromFloor(string locCodeName){
 
     
             BaseFloor t = new BaseFloor();
@@ -379,14 +398,14 @@ namespace DataAccessLayer
 
             t = floors.Where(t =>  t.LocationCodeName==locCodeName).FirstOrDefault();
 
-            if (t == null)
+            if (t != null)
             {
-                return false;
-                
-            }else{
-                t.LocationRemainingTours=t.LocationRemainingTours-1;
-                DbContext.SaveChanges();
-                return true;
+                if(t.LocationRemainingTours!=0){
+
+                    --t.LocationRemainingTours;    
+                    DbContext.SaveChanges();
+                    
+                }
             }
             
 

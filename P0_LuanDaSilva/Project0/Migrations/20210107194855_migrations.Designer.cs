@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Project0.Migrations
 {
     [DbContext(typeof(Project0DbContext))]
-    [Migration("20210103162808_MigrationsPart2")]
-    partial class MigrationsPart2
+    [Migration("20210107194855_migrations")]
+    partial class migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,23 +37,6 @@ namespace Project0.Migrations
                     b.ToTable("Floors");
                 });
 
-            modelBuilder.Entity("Models.FloorTourLine", b =>
-                {
-                    b.Property<Guid>("FloorTourLineID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LocationCodeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TourID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("FloorTourLineID");
-
-                    b.ToTable("FloorTourLines");
-                });
-
             modelBuilder.Entity("Models.FloorTourUsrLine", b =>
                 {
                     b.Property<Guid>("FloorTourUsrLineID")
@@ -68,6 +51,9 @@ namespace Project0.Migrations
 
                     b.Property<Guid>("TourID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("TourTakenAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");

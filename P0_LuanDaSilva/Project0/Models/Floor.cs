@@ -61,7 +61,7 @@ namespace Models
         public int LocationRemainingTours { get {return locationRemainingTours;} set {
 
                     
-                if ( value > 0)
+                if ( value > -1)
                     {
                         locationRemainingTours = value;
                     }
